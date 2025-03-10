@@ -1,0 +1,20 @@
+<div class="login-container">
+  <kendo-card>
+    <kendo-card-header>Zaloguj</kendo-card-header>
+    <kendo-card-body>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="k-form-field">
+          <label for="email">Email</label>
+          <kendo-textbox formControlName="email" id="email"></kendo-textbox>
+        </div>
+
+        <div class="k-form-field">
+          <label for="password">Hasło</label>
+          <kendo-textbox formControlName="password" id="password" [type]="'password'"></kendo-textbox>
+        </div>
+
+        <button kendoButton type="submit" class="add-model-button" [disabled]="loginForm.invalid">Zaloguj</button>
+      </form>
+    </kendo-card-body>
+  </kendo-card>
+</div>

@@ -1,0 +1,60 @@
+<app-logout></app-logout>
+
+<div class="dashboard-container">
+    <div class="glass-card">
+        <h1>📦 Wypożyczalnia</h1>
+        <kendo-grid
+                [kendoGridBinding]="groupedEquipments"
+                [skip]="skip"
+                [pageSize]="pageSize"
+                [sortable]="true"
+                [filterable]="true"
+                [pageable]="true">
+
+            <kendo-grid-column field="name" title="Nazwa modelu" [width]="150"></kendo-grid-column>
+            <kendo-grid-column field="description" title="Opis" [width]="250"></kendo-grid-column>
+            <kendo-grid-column field="price" title="Cena" [width]="50" [filterable]="false"></kendo-grid-column>
+            <kendo-grid-column field="quantity" title="Ilość totalna" [width]="80" [filterable]="false"></kendo-grid-column>
+            <kendo-grid-column field="stockQuantity" title="Ilość na stanie" [width]="80" [filterable]="false"></kendo-grid-column>
+
+            <!-- Kolumna z przyciskiem do wypożyczenia -->
+            <kendo-grid-column title="Akcje" [width]="65">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <button
+                            kendoButton
+                            (click)="onRentClick(dataItem)">
+                        Wypożycz
+                    </button>
+                </ng-template>
+            </kendo-grid-column>
+
+        </kendo-grid>
+    </div>
+
+    <div class="glass-card" *ngIf="selectedProduct">
+        <div>
+            <h1>Wybrany produkt: {{ selectedProduct.name }} </h1>
+            <h2><strong>Opis:</strong> {{ selectedProduct.description }}</h2>
+            <h2><strong>Cena:</strong> {{ selectedProduct.price | currency }}</h2>
+            <h2><strong>Ilość totalna:</strong> {{ selectedProduct.quantity }}</h2>
+            <h2><strong>Ilość na stanie:</strong> {{ selectedProduct.stockQuantity }}</h2>
+        </div>
+
+        <div>
+            <h1>Wybierz okres wypożyczenia</h1>
+            <h2>Rozpoczęcie wypożyczenia</h2>
+            <kendo-datepicker id="rentalStartDate" [value]="rentalStartDate" [min]="minDate" [disabled]="true"></kendo-datepicker>
+
+            <div *ngIf="rentalStartDate">
+                <h2>Koniec wypożyczenia</h2>
+                <kendo-datepicker id="rentalEndDate" [(value)]="rentalEndDate" [min]="minDate" [max]="maxDate"></kendo-datepicker>
+            </div>
+        </div>
+
+        <button kendoButton class="add-model-button" [disabled]="!rentalEndDate" (click)="onRent()">Wypożycz</button>
+    </div>
+</div>
+
+
+
+

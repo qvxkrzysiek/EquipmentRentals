@@ -1,0 +1,32 @@
+﻿<!-- Tabela sprzętu -->
+<kendo-grid
+        [kendoGridBinding]="equipmentList"
+        [pageable]="true"
+        [pageSize]="5">
+>
+
+    <!-- REKORDY -->
+    <kendo-grid-column field="equipmentId" title="ID Sprzętu" [width]="100"></kendo-grid-column>
+    <kendo-grid-column field="serialNumber" title="Numer Seryjny">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <input *ngIf="editedEquipmentId === dataItem.equipmentId" [(ngModel)]="newEquipment.serialNumber" kendoTextBox />
+            <span *ngIf="editedEquipmentId !== dataItem.equipmentId">{{ dataItem.serialNumber }}</span>
+        </ng-template>
+    </kendo-grid-column>
+
+    <!-- AKCJE -->
+    <kendo-grid-column title="Akcje" [width]="200">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <button kendoButton (click)="editEquipmentHandler(dataItem)" *ngIf="editedEquipmentId !== dataItem.equipmentId">Edytuj</button>
+            <button kendoButton (click)="saveEquipmentHandler()" *ngIf="editedEquipmentId === dataItem.equipmentId">Zapisz</button>
+            <button kendoButton (click)="cancelEquipmentHandler()" *ngIf="editedEquipmentId === dataItem.equipmentId">Anuluj</button>
+            <button kendoButton (click)="removeEquipmentHandler(dataItem.equipmentId)">Usuń</button>
+        </ng-template>
+    </kendo-grid-column>
+</kendo-grid>
+
+<!-- DODAWANIE SPRZĘTU-->
+<button kendoButton class="add-model-button" (click)="openAddModelDialog()">
+    ➕ Dodaj Sprzęt
+</button>
+<app-equipmentcreate *ngIf="showAddModelDialog" [modelId]="modelId" (equipmentCreated)="addNewModel($event)" (dialogClosed)="closeAddModelDialog()"></app-equipmentcreate>

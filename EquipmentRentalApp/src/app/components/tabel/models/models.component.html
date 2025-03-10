@@ -1,0 +1,49 @@
+﻿<kendo-grid
+        [kendoGridBinding]="models"
+        [pageable]="true"
+        [pageSize]="10"
+>
+
+    <!-- REKORDY -->
+    <kendo-grid-column field="modelId" title="ID Modelu" [width]="100"></kendo-grid-column>
+    <kendo-grid-column field="name" title="Nazwa" [width]="200">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <input *ngIf="editedModelId === dataItem.modelId" [(ngModel)]="newModel.name" kendoTextBox />
+            <span *ngIf="editedModelId !== dataItem.modelId">{{ dataItem.name }}</span>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="description" title="Opis">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <input *ngIf="editedModelId === dataItem.modelId" [(ngModel)]="newModel.description" kendoTextBox />
+            <span *ngIf="editedModelId !== dataItem.modelId">{{ dataItem.description }}</span>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="price" title="Cena" [width]="150" [format]="'{0:c}'">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <input *ngIf="editedModelId === dataItem.modelId" [(ngModel)]="newModel.price" kendoTextBox />
+            <span *ngIf="editedModelId !== dataItem.modelId">{{ dataItem.price | currency }}</span>
+        </ng-template>
+    </kendo-grid-column>
+
+    <!-- AKCJE -->
+    <kendo-grid-column title="Akcje" [width]="200">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <button kendoButton (click)="editModelHandler(dataItem)" *ngIf="editedModelId !== dataItem.modelId">Edytuj</button>
+            <button kendoButton (click)="saveModelHandler()" *ngIf="editedModelId === dataItem.modelId">Zapisz</button>
+            <button kendoButton (click)="cancelModelHandler()" *ngIf="editedModelId === dataItem.modelId">Anuluj</button>
+            <button kendoButton (click)="removeModelHandler(dataItem.modelId)">Usuń</button>
+        </ng-template>
+    </kendo-grid-column>
+
+    <!-- SPRZĘT -->
+    <ng-template kendoGridDetailTemplate let-dataItem>
+        <app-table-equipment [modelId]="dataItem.modelId"></app-table-equipment>
+    </ng-template>
+</kendo-grid>
+
+<!-- DODAWANIE MODELU-->
+<button kendoButton class="add-model-button" (click)="openAddModelDialog()">
+    ➕ Dodaj Model
+</button>
+
+<app-modelcreate *ngIf="showAddModelDialog" (modelCreated)="addNewModel($event)" (dialogClosed)="closeAddModelDialog()"></app-modelcreate>

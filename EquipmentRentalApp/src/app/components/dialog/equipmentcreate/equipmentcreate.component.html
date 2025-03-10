@@ -1,0 +1,11 @@
+﻿<kendo-dialog>
+    <div>
+        <label for="serialNumber">Numer seryjny</label>
+        <input id="serialNumber" [(ngModel)]="newEquipment.serialNumber" kendoTextBox />
+    </div>
+
+    <div kendoDialogActions>
+        <button kendoButton (click)="saveEquipment()">Zapisz</button>
+        <button kendoButton (click)="cancel()">Anuluj</button>
+    </div>
+</kendo-dialog>

@@ -1,0 +1,17 @@
+﻿<kendo-dialog>
+    <div>
+        <label for="name">Nazwa</label>
+        <input id="name" [(ngModel)]="newModel.name" kendoTextBox />
+
+        <label for="description">Opis</label>
+        <input id="description" [(ngModel)]="newModel.description" kendoTextBox />
+
+        <label for="price">Cena</label>
+        <input id="price" [(ngModel)]="newModel.price" kendoTextBox type="number" />
+    </div>
+
+    <div kendoDialogActions>
+        <button kendoButton (click)="saveModel()">Zapisz</button>
+        <button kendoButton (click)="cancel()">Anuluj</button>
+    </div>
+</kendo-dialog>

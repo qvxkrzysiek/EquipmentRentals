@@ -1,0 +1,10 @@
+/EquipmentRentalApp/.angular
+/EquipmentRentalApp/.idea
+/EquipmentRentalApp/.vscode
+/EquipmentRentalApp/node_modules
+/EquipmentRentalApp/telerik-license.txt
+
+/EquipmentRentalAPI/.idea
+/EquipmentRentalAPI/.vs
+/EquipmentRentalAPI/bin
+/EquipmentRentalAPI/logs

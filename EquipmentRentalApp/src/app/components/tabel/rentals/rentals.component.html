@@ -1,0 +1,44 @@
+﻿<kendo-grid
+        [kendoGridBinding]="rentals"
+        [pageable]="true"
+        [pageSize]="10"
+>
+    <kendo-grid-column field="rentalId" title="ID Wypożyczenia" [width]="100"></kendo-grid-column>
+    <kendo-grid-column field="equipmentModelName" title="Model" [width]="200"></kendo-grid-column>
+    <kendo-grid-column field="equipmentSerialNumber" title="Numer seryjny" [width]="100"></kendo-grid-column>
+    <kendo-grid-column title="Data rozpoczęcia" [width]="150">
+        <ng-template kendoGridCellTemplate let-rental>
+            {{ rental.rentalDate | date: 'dd-MM-yyyy' }}
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column title="Data zakończenia" [width]="150">
+        <ng-template kendoGridCellTemplate let-rental>
+            {{ rental.returnDate | date: 'dd-MM-yyyy' }}
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="userEmail" title="Email" [width]="200"></kendo-grid-column>
+    <kendo-grid-column title="Status" [width]="150">
+        <ng-template kendoGridCellTemplate let-rental>
+            <span [ngClass]="{'text-success': rental.isReturned, 'text-danger': !rental.isReturned}">
+                {{ rental.isReturned ? 'Zwrócony' : 'Wypożyczony' }}
+            </span>
+        </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column title="Akcje" [width]="80">
+        <ng-template kendoGridCellTemplate let-rental>
+            <button kendoButton
+                    *ngIf="!rental.isReturned"
+                    (click)="confirmReturn(rental.rentalId)"
+                    class="btn btn-primary"
+            >
+                Zwróć
+            </button>
+        </ng-template>
+    </kendo-grid-column>
+</kendo-grid>
+
+<app-ask *ngIf="selectedRentalId !== null"
+         message="Czy na pewno chcesz oznaczyć sprzęt jako zwrócony?"
+         (confirmed)="handleConfirmation($event)">
+</app-ask>
